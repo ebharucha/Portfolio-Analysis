@@ -8,18 +8,15 @@ import numpy as np
 import pandas as pd
 
 # Read portfolio configutation
-with open('portfolio_cfg.json') as f:
-    portfolio_cfg = json.load(f)
+try:   
+    with open('per_portfolio_cfg.json') as f:
+        portfolio_cfg = json.load(f)
+except:
+    with open('portfolio_cfg.json') as f:
+        portfolio_cfg = json.load(f)
 
 df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
 
-# price = []
-# value = []
-# for stock, quantity in portfolio_cfg.items():
-#     quote = Ticker(stock).price[stock]['regularMarketPrice']
-#     price.append(quote)
-#     value.append(f'{quote*quantity:.2f}')
-    
 df_port_cfg['Price'] = [Ticker(stock).price[stock]['regularMarketPrice'] for stock, quantity in portfolio_cfg.items()]
 df_port_cfg['Value'] = [f'{p*q:.2f}' for p, q in zip(df_port_cfg.Price, portfolio_cfg.values())]
 df_port_cfg['Value'] = df_port_cfg['Value'].astype(float)
