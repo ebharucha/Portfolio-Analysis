@@ -5,7 +5,6 @@
 import argparse
 import json
 from yahooquery import Ticker
-import numpy as np
 import pandas as pd
 
 def read_config():
