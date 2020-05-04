@@ -1,9 +1,9 @@
 # Portfolio Analysis
-Simple script to get quotes, compute portfolio value, percentages of various holdings 
+Simple script to get quotes, compute portfolio value, percentages of various holdings<br>
 and present a market summary as speciied in portfolio_cfg.json.
 
-Usage:
-python portfolio.py [-p] [-m]
--p: print only portfolio details
--m: print only market details
-no arg: print both portfolio & market details
+Usage:<br>
+<b>python portfolio.py [-p] [-m]</b><br>
+-p: print only portfolio details<br>
+-m: print only market details<br>
+no arg: print both portfolio & market details<br>
