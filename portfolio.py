@@ -2,6 +2,7 @@
 # ebharucha, 1/5/2020, 4/5/2020
 ################################################################################################################################
 
+import argparse
 import json
 from yahooquery import Ticker
 import numpy as np
@@ -38,5 +39,14 @@ def market_summary(market_config):
         
 if __name__ == "__main__":
     config = read_config()
-    portfolio_summary(config["Portfolio"])
-    market_summary(config["Markets"])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", action='store_true')
+    parser.add_argument("-m", action='store_true')
+    args = parser.parse_args()
+    if (args.p == True):
+        portfolio_summary(config["Portfolio"])
+    elif (args.m == True):
+        market_summary(config["Markets"])
+    else:
+        portfolio_summary(config["Portfolio"])
+        market_summary(config["Markets"])
