@@ -1,3 +1,3 @@
 # Portfolio Analysis
-Simple script to get quotes and compute portfolio value, percentages of various holdings 
-as speciied in portfolio_cfg.json.
+Simple script to get quotes, compute portfolio value, percentages of various holdings 
+and present a market summary as speciied in portfolio_cfg.json.
