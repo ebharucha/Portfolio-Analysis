@@ -1,10 +1,22 @@
 {
-	"AMGN" : 100,
-	"GOOG" : 200,
-	"MSFT" : 200,
-	"QCOM" : 150,
-	"MU" : 1000,
-	"TWTR" : 875,
-	"AMZN" : 50,
-	"MDLZ" : 690
+	"Portfolio": {
+		"AMGN" : 100,
+		"GOOG" : 200,
+		"MSFT" : 200,
+		"QCOM" : 150,
+		"MU" : 1000,
+		"TWTR" : 875,
+		"AMZN" : 50,
+		"MDLZ" : 690
+	},
+	"Markets": {
+		"S&P" : "ES=F",
+		"NASDAQ" : "NQ=F",
+		"VIX" : "^VIX",
+		"US-TREASURY" : "ZB=F",
+		"Crude Oil" : "CL=F",
+		"Gold" : "GC=F",
+		"US Dollar" : "DX=F",
+		"Bitcoin" : "BTC-USD"
+	}
 }
