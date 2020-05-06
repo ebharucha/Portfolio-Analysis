@@ -8,13 +8,15 @@ from yahooquery import Ticker     # Use the yahooquery api wrapper (https://pypi
 import pandas as pd
 
 # Function to read portfolio configutation
+flag = 'personal'
 def read_config():
     try:   
-        with open('per_portfolio_cfg.json') as f:
+        with open('./cfg/per_portfolio_cfg.json') as f:
             config = json.load(f)
     except:
         with open('portfolio_cfg.json') as f:
             config = json.load(f)
+        flag = ''
     return (config)
 
 # Function to out portfolio summary
@@ -27,7 +29,10 @@ def portfolio_summary(portfolio_cfg):
     total_value = df_port_cfg.Value.sum()
     df_port_cfg['Portfolio %age'] = [f'{(val/total_value)*100:.2f}%' for val in df_port_cfg.Value]
 
-    df_port_cfg.to_csv('portfolio.csv')
+    if (flag == 'personal'):
+        df_port_cfg.to_csv('./data/portfolio.csv')
+    else:
+        df_port_cfg.to_csv('portfolio.csv')
     print(df_port_cfg)
     print(f'\nTotal value = ${total_value:,.2f}\n')
 
