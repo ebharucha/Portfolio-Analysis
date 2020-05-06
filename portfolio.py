@@ -8,19 +8,17 @@ from yahooquery import Ticker     # Use the yahooquery api wrapper (https://pypi
 import pandas as pd
 
 # Function to read portfolio configutation
-flag = 'personal'
 def read_config():
     try:   
-        with open('./cfg/per_portfolio_cfg.json') as f:
+        with open('./portfolio_personal_cfg.json') as f:
             config = json.load(f)
     except:
-        with open('portfolio_cfg.json') as f:
+        with open('./portfolio_public_cfg.json') as f:
             config = json.load(f)
-        flag = ''
     return (config)
 
 # Function to out portfolio summary
-def portfolio_summary(portfolio_cfg):
+def portfolio_summary(portfolio_cfg, flag):
     print ('=========Portfolio=========')
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
     df_port_cfg['Price'] = [Ticker(stock).price[stock]['regularMarketPrice'] for stock, quantity in portfolio_cfg.items()]
@@ -28,11 +26,11 @@ def portfolio_summary(portfolio_cfg):
     df_port_cfg['Value'] = df_port_cfg['Value'].astype(float)
     total_value = df_port_cfg.Value.sum()
     df_port_cfg['Portfolio %age'] = [f'{(val/total_value)*100:.2f}%' for val in df_port_cfg.Value]
-
+    
     if (flag == 'personal'):
-        df_port_cfg.to_csv('./data/portfolio.csv')
+        df_port_cfg.to_csv('./portfolio_personal.csv')
     else:
-        df_port_cfg.to_csv('portfolio.csv')
+        df_port_cfg.to_csv('portfolio_public.csv')
     print(df_port_cfg)
     print(f'\nTotal value = ${total_value:,.2f}\n')
 
@@ -69,11 +67,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     symbols = args.q
     if (args.p == True):
-        portfolio_summary(config["Portfolio"])
+        portfolio_summary(config["Portfolio"], config["Flag"])
     elif (args.m == True):
         market_summary(config["Markets"])
     elif (args.q != None):
         get_quotes(symbols)
     else:
-        portfolio_summary(config["Portfolio"])
+        portfolio_summary(config["Portfolio"], config["Flag"])
         market_summary(config["Markets"])

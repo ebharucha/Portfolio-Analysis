@@ -1,4 +1,5 @@
 {
+	"Flag" : "public",
 	"Portfolio": {
 		"AMGN" : 100,
 		"GOOG" : 200,
