@@ -1,5 +1,5 @@
 ################################################################################################################################
-# ebharucha, 1/5/2020, 4/5/2020
+# ebharucha, 1/5/2020, 4/5/2020, 6/5/2020
 ################################################################################################################################
 
 import argparse
@@ -30,22 +30,40 @@ def portfolio_summary(portfolio_cfg):
     print(df_port_cfg)
     print(f'\nTotal value = ${total_value:,.2f}\n')
 
+def get_info(symbol):
+    price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
+    change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
+    per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
+    return (symbol, price, change, per_change)
+
 def market_summary(market_config):
     print ('=========Markets=========')
     for m, s in market_config.items():
-        print(f'{m} => Price={Ticker(s).price[s]["regularMarketPrice"]}, Change={Ticker(s).price[s]["regularMarketChange"]:.2f}, \
-%age change={Ticker(s).price[s]["regularMarketChangePercent"]:.2f}%')
+        (symbol, price, change, per_change) = get_info(s)
+        print(f'{m} => Price={price}, Change={change}, %age change={per_change}%')
         
+def get_quotes(symbols):
+    symbols = symbols.split(',')
+    for s in symbols:
+        s = s.strip()
+        (symbol, price, change, per_change) = get_info(s)
+        print(f'{symbol} => Price={price}, Change={change}, %age change={per_change}%')
+
 if __name__ == "__main__":
     config = read_config()
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", action='store_true')
     parser.add_argument("-m", action='store_true')
+    parser.add_argument("-q", help='list symbol(s) separated by commas & enclosed in quotes\
+        e.g. "AAPL, GOOG, AMZN" ')
     args = parser.parse_args()
+    symbols = args.q
     if (args.p == True):
         portfolio_summary(config["Portfolio"])
     elif (args.m == True):
         market_summary(config["Markets"])
+    elif (args.q != None):
+        get_quotes(symbols)
     else:
         portfolio_summary(config["Portfolio"])
         market_summary(config["Markets"])
