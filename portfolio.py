@@ -4,11 +4,11 @@
 
 import argparse
 import json
-from yahooquery import Ticker
+from yahooquery import Ticker     # Use the yahooquery api wrapper (https://pypi.org/project/yahooquery/)
 import pandas as pd
 
+# Function to read portfolio configutation
 def read_config():
-    # Read portfolio configutation
     try:   
         with open('per_portfolio_cfg.json') as f:
             config = json.load(f)
@@ -17,6 +17,7 @@ def read_config():
             config = json.load(f)
     return (config)
 
+# Function to out portfolio summary
 def portfolio_summary(portfolio_cfg):
     print ('=========Portfolio=========')
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
@@ -30,18 +31,21 @@ def portfolio_summary(portfolio_cfg):
     print(df_port_cfg)
     print(f'\nTotal value = ${total_value:,.2f}\n')
 
+# Function to output basic quote details for supplied symbol 
 def get_info(symbol):
     price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
     change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
     per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
     return (symbol, price, change, per_change)
 
+# Function to output market summary
 def market_summary(market_config):
     print ('=========Markets=========')
     for m, s in market_config.items():
         (symbol, price, change, per_change) = get_info(s)
         print(f'{m} => Price={price}, Change={change}, %age change={per_change}%')
-        
+
+# Function to get quote details for supplied symbol(s) 
 def get_quotes(symbols):
     symbols = symbols.split(',')
     for s in symbols:
@@ -49,6 +53,7 @@ def get_quotes(symbols):
         (symbol, price, change, per_change) = get_info(s)
         print(f'{symbol} => Price={price}, Change={change}, %age change={per_change}%')
 
+# Main function
 if __name__ == "__main__":
     config = read_config()
     parser = argparse.ArgumentParser()
