@@ -1,0 +1,35 @@
+{
+	"Flag" : "personal",
+	"Portfolio": {
+		"AMN" : 400,
+		"CTL" : 94,
+		"CS" : 12620,
+		"DELL" : 99,
+		"GE" : 4500,
+		"KHC" : 23,
+		"LITE" : 40,
+		"MDLZ" : 69,
+		"MO" : 100,
+		"MSI" : 142,
+		"PM" : 100,
+		"RBBN" : 100,
+		"SLV" : 1000,
+		"TBT" : 20,
+		"TXN" : 200,
+		"VIAV" : 200,
+		"XRP-USD" : 7000,
+		"XLM-USD" : 9931,
+		"LTC-USD" : 2,
+		"EOS-USD" : 192
+	},
+	"Markets": {
+		"S&P" : "ES=F",
+		"NASDAQ" : "NQ=F",
+		"VIX" : "^VIX",
+		"US-TREASURY" : "ZB=F",
+		"Crude Oil" : "CL=F",
+		"Gold" : "GC=F",
+		"US Dollar" : "DX=F",
+		"Bitcoin" : "BTC-USD"
+	}
+}
