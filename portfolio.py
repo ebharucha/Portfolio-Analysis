@@ -1,5 +1,5 @@
 ################################################################################################################################
-# ebharucha, 1/5/2020, 4/5/2020, 6/5/2020
+# ebharucha: 1/5/2020, 4/5/2020, 6/5/2020, 6/6/2020
 ################################################################################################################################
 
 import argparse
@@ -17,11 +17,20 @@ def read_config():
             config = json.load(f)
     return (config)
 
+# Function to output basic quote details for supplied symbol 
+def get_info(symbol):
+    price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
+    change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
+    per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
+    return (symbol, price, change, per_change)
+
 # Function to out portfolio summary
 def portfolio_summary(portfolio_cfg, flag):
     print ('=========Portfolio=========')
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
     df_port_cfg['Price'] = [Ticker(stock).price[stock]['regularMarketPrice'] for stock, quantity in portfolio_cfg.items()]
+    df_port_cfg['%age change'] = [f'{Ticker(stock).price[stock]["regularMarketChangePercent"]:.2f}%' for stock, quantity in portfolio_cfg.items()]
+    df_port_cfg = df_port_cfg.round(2)
     df_port_cfg['Value'] = [f'{p*q:.2f}' for p, q in zip(df_port_cfg.Price, portfolio_cfg.values())]
     df_port_cfg['Value'] = df_port_cfg['Value'].astype(float)
     total_value = df_port_cfg.Value.sum()
@@ -33,13 +42,6 @@ def portfolio_summary(portfolio_cfg, flag):
         df_port_cfg.to_csv('portfolio_public.csv')
     print(df_port_cfg)
     print(f'\nTotal value = ${total_value:,.2f}\n')
-
-# Function to output basic quote details for supplied symbol 
-def get_info(symbol):
-    price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
-    change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
-    per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
-    return (symbol, price, change, per_change)
 
 # Function to output market summary
 def market_summary(market_config):
