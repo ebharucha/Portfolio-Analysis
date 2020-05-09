@@ -1,5 +1,5 @@
 ################################################################################################################################
-# ebharucha: 1/5/2020, 4/5/2020, 6/5/2020, 6/6/2020
+# ebharucha: 1/5/2020, 4/5/2020, 6/5/2020, 6/5/2020, 9/5/2020
 ################################################################################################################################
 
 import argparse
@@ -29,6 +29,7 @@ def portfolio_summary(portfolio_cfg, flag):
     print ('=========Portfolio=========')
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
     df_port_cfg['Price'] = [Ticker(stock).price[stock]['regularMarketPrice'] for stock, quantity in portfolio_cfg.items()]
+    df_port_cfg['Change'] = [Ticker(stock).price[stock]['regularMarketChange'] for stock, quantity in portfolio_cfg.items()]
     df_port_cfg['%age change'] = [f'{Ticker(stock).price[stock]["regularMarketChangePercent"]:.2f}%' for stock, quantity in portfolio_cfg.items()]
     df_port_cfg = df_port_cfg.round(2)
     df_port_cfg['Value'] = [f'{p*q:.2f}' for p, q in zip(df_port_cfg.Price, portfolio_cfg.values())]
