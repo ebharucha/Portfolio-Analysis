@@ -27,7 +27,7 @@ def get_info(symbol):
     except:
         return (symbol, None, None, None)
 
-# Function to out portfolio summary
+# Function to output portfolio summary
 def portfolio_summary(portfolio_cfg, flag):
     print ('=========Portfolio=========')
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
