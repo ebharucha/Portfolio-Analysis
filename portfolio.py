@@ -22,7 +22,7 @@ def get_info(symbol):
     try:
         price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
         change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
-        per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
+        per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]*100:.2f}'
         return (symbol, price, change, per_change)
     except:
         return (symbol, None, None, None)
@@ -34,7 +34,7 @@ def portfolio_summary(portfolio_cfg, flag):
     try:
         df_port_cfg['Price'] = [f'{Ticker(stock).price[stock]["regularMarketPrice"]:.2f}' for stock, quantity in portfolio_cfg.items()]
         df_port_cfg['Change'] = [f'{Ticker(stock).price[stock]["regularMarketChange"]:.2f}' for stock, quantity in portfolio_cfg.items()]
-        df_port_cfg['%age change'] = [f'{Ticker(stock).price[stock]["regularMarketChangePercent"]:.2f}%' for stock, quantity in portfolio_cfg.items()]
+        df_port_cfg['%age_change'] = [f'{Ticker(stock).price[stock]["regularMarketChangePercent"]*100:.2f}%' for stock, quantity in portfolio_cfg.items()]
         df_port_cfg['Value'] = [f'{float(p)*q:.2f}' for p, q in zip(df_port_cfg.Price, portfolio_cfg.values())]
         df_port_cfg['Value'] = df_port_cfg['Value'].astype(float)
     except:
@@ -62,7 +62,7 @@ def get_quotes(symbols):
     for s in symbols:
         s = s.strip()
         (symbol, price, change, per_change) = get_info(s)
-        print(f'{symbol} => Price={price}, Change={change}, %age change={per_change}%')
+        print(f'{symbol} => Price={price}, Change={change}, %age_change={per_change}%')
 
 # Main function
 if __name__ == "__main__":
