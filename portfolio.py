@@ -19,10 +19,13 @@ def read_config():
 
 # Function to output basic quote details for supplied symbol 
 def get_info(symbol):
-    price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
-    change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
-    per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
-    return (symbol, price, change, per_change)
+    try:
+        price = f'{Ticker(symbol).price[symbol]["regularMarketPrice"]:.2f}'
+        change = f'{Ticker(symbol).price[symbol]["regularMarketChange"]:.2f}'
+        per_change = f'{Ticker(symbol).price[symbol]["regularMarketChangePercent"]:.2f}'
+        return (symbol, price, change, per_change)
+    except:
+        return (symbol, None, None, None)
 
 # Function to out portfolio summary
 def portfolio_summary(portfolio_cfg, flag):
