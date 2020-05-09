@@ -33,7 +33,7 @@ def portfolio_summary(portfolio_cfg, flag):
     df_port_cfg = pd.DataFrame.from_dict(portfolio_cfg, orient='index', columns=['Quantity'])
     try:
         df_port_cfg['Price'] = [Ticker(stock).price[stock]['regularMarketPrice'] for stock, quantity in portfolio_cfg.items()]
-        df_port_cfg['Change'] = [Ticker(stock).price[stock]['regularMarketChange'] for stock, quantity in portfolio_cfg.items()]
+        df_port_cfg['Change'] = [f'{Ticker(stock).price[stock]["regularMarketChange"]:.2f}' for stock, quantity in portfolio_cfg.items()]
         df_port_cfg['%age change'] = [f'{Ticker(stock).price[stock]["regularMarketChangePercent"]:.2f}%' for stock, quantity in portfolio_cfg.items()]
         df_port_cfg['Value'] = [f'{p*q:.2f}' for p, q in zip(df_port_cfg.Price, portfolio_cfg.values())]
         df_port_cfg['Value'] = df_port_cfg['Value'].astype(float)
