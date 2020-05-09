@@ -7,7 +7,7 @@ import json
 from yahooquery import Ticker     # Use the yahooquery api wrapper (https://pypi.org/project/yahooquery/)
 import pandas as pd
 
-# Function to read portfolio configutation
+# Function to read portfolio configuration
 def read_config():
     try:   
         with open('./portfolio_personal_cfg.json') as f:
